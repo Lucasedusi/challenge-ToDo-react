@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import "../styles/tasklist.scss";
@@ -12,8 +12,20 @@ interface Task {
 }
 
 export function TaskList() {
-	const [tasks, setTasks] = useState<Task[]>([]);
 	const [newTaskTitle, setNewTaskTitle] = useState("");
+	const [tasks, setTasks] = useState<Task[]>(() => {
+		const storagedTasks = localStorage.getItem("@SaveTask:Tasks");
+
+		if (storagedTasks) {
+			return JSON.parse(storagedTasks);
+		}
+
+		return [];
+	});
+
+	useEffect(() => {
+		localStorage.setItem("@SaveTask:Tasks", JSON.stringify(tasks));
+	}, [tasks]);
 
 	function handleCreateNewTask() {
 		if (!newTaskTitle) return;
