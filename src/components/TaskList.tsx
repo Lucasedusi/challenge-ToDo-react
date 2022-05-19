@@ -14,10 +14,10 @@ interface Task {
 export function TaskList() {
 	const [newTaskTitle, setNewTaskTitle] = useState("");
 	const [tasks, setTasks] = useState<Task[]>(() => {
-		const storagedTasks = localStorage.getItem("@SaveTask:Tasks");
+		const storageTasks = localStorage.getItem("@SaveTask:Tasks");
 
-		if (storagedTasks) {
-			return JSON.parse(storagedTasks);
+		if (storageTasks) {
+			return JSON.parse(storageTasks);
 		}
 
 		return [];
@@ -30,33 +30,28 @@ export function TaskList() {
 	function handleCreateNewTask() {
 		if (!newTaskTitle) return;
 
-		const newTaks = {
+		const newTasks = {
 			id: uuidv4(),
 			title: newTaskTitle,
 			isComplete: false,
 		};
 
-		setTasks((oldState) => [...oldState, newTaks]);
+		setTasks((oldState) => [...oldState, newTasks]);
 		setNewTaskTitle("");
 	}
 
 	function handleToggleTaskCompletion(id: string) {
-		const completeTaks = tasks.map((task) =>
-			task.id === id
-				? {
-						...task,
-						isComplete: !task.isComplete,
-				  }
-				: task
+		const completeTasks = tasks.map((task) =>
+			task.id === id ? { ...task, isComplete: !task.isComplete } : task
 		);
 
-		setTasks(completeTaks);
+		setTasks(completeTasks);
 	}
 
 	function handleRemoveTask(id: string) {
-		const filteredTaks = tasks.filter((task) => task.id !== id);
+		const removeTasks = tasks.filter((task) => task.id !== id);
 
-		setTasks(filteredTaks);
+		setTasks(removeTasks);
 	}
 
 	return (
