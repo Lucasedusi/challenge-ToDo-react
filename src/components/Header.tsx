@@ -1,11 +1,11 @@
-import '../styles/header.scss'
+import "../styles/header.scss";
 
 export function Header() {
-  return (
-    <header className="header">
-      <div>
-        <img src="/logo.svg" alt="to.do"/>
-      </div>
-    </header>
-  )
+	return (
+		<header className="header">
+			<div>
+				<h1>Lucas.Tasks</h1>
+			</div>
+		</header>
+	);
 }
